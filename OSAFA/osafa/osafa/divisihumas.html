@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Organisasi Santri Sekolah Impian</title>
+    <link rel="icon" type="png" href="/osafa/osafa/favicon_io/android-chrome-512x512.png">
+
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <link href="/osafa/osafa/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/osafa/osafa/css/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="/osafa/osafa/css/osafa.css" rel="stylesheet">
+    <style>
+        /* GLOBAL VARIABLES */
+        :root {
+            --font: "Roboto", sans-serif;
+            --fontOrigin: 1rem;
+            /* 16px */
+            --fontSmall: 0.625em;
+            /* 10px */
+            --fontMedium: 0.875em;
+            /* 14px */
+            --fontNormal: 1em;
+            /* 16px */
+            --fontLarge: 1.375em;
+            /* 22px */
+            --fontLight: 100;
+            --fontRegular: 400;
+            --speed: 0.65s;
+        }
+
+        @keyframes zoom {
+            from {
+                object-position: 0 50%;
+            }
+
+            to {
+                object-position: 100% 50%;
+            }
+        }
+
+        @keyframes blur {
+            from {
+                -webkit-transform: scale(1, 1);
+                transform: scale(1, 1);
+            }
+
+            to {
+                -webkit-transform: scale(1.5, 1.5);
+                transform: scale(2, 2);
+            }
+        }
+
+        * {
+            border: 0;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font);
+            font-weight: var(--fontOrigin);
+            font-size: 1rem;
+            line-height: 1.2;
+            letter-spacing: 0.005rem;
+            -webkit-font-smoothing: subpixel-antialiased;
+            font-smoothing: subpixel-antialiased;
+        }
+
+        .card {
+            position: relative;
+            margin-right: 130px;
+            grid-area: card;
+            align-self: center;
+            justify-self: center;
+            overflow: hidden;
+            display: block;
+            width: 100%;
+            max-width: 250px;
+            height: 400px;
+            font-size: var(--fontOrigin);
+            border-radius: 8px;
+            box-shadow: 0 16px 60px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            -webkit-transition: all var(--speed) ease;
+            transition: all var(--speed) ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 40px 130px rgba(0, 0, 0, 0.6);
+            -webkit-transform: scale(1.1, 1.1);
+            transform: scale(1.1, 1.1);
+        }
+
+        .card__save {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: block;
+            width: 35px;
+            height: 35px;
+            background: transparent;
+            border: 0;
+            opacity: 0;
+            border-radius: 3px;
+            -webkit-transition: all var(--speed) ease;
+            transition: all var(--speed) ease;
+        }
+
+        .card__save:focus {
+            outline: 0;
+            background-color: rgba(255, 255, 255, 0);
+        }
+
+        .card:hover .card__save {
+            opacity: 0.6;
+        }
+
+        .card__save i {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            -webkit-transition: all var(--speed) ease;
+            transition: all var(--speed) ease;
+        }
+
+        .card__save:hover i {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .card__save:active,
+        .card__save.active {
+            opacity: 1 !important;
+        }
+
+        .card__save:active i,
+        .card__save.active i {
+            color: white;
+        }
+
+        .card__image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            display: block;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
+        }
+
+        .card__image img {
+            -webkit-transform: scale(1.3, 1.3);
+            transform: scale(1.3, 1.3);
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1;
+            -webkit-transition: all var(--speed) ease;
+            transition: all var(--speed) ease;
+            animation-name: zoom;
+            animation-duration: 30s;
+            animation-direction: alternate;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .card:hover .card__image img {
+            -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+            opacity: 0.5;
+        }
+
+        .card__header {
+            display: grid;
+            width: 100%;
+            height: 200px;
+        }
+
+        .card__profile {
+            align-self: center;
+            justify-self: center;
+            display: block;
+            overflow: hidden;
+            width: 10vmax;
+            height: 10vmax;
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+        }
+
+        .card__profile img {
+            -webkit-transform: scale(1.5, 1.5) translateZ(0);
+            transform: scale(1.5, 1.5) translateZ(0);
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 50%;
+            -webkit-filter: grayscale(50%) contrast(75%) brightness(1.3);
+            filter: grayscale(50%) contrast(75%) brightness(1.3);
+            -webkit-transition: all var(--speed) ease;
+            transition: all var(--speed) ease;
+            mix-blend-mode: normal;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        .card:hover .card__profile img {
+            -webkit-transform: scale(1, 1) translateZ(0);
+            transform: scale(1, 1) translateZ(0);
+        }
+
+        .card__body {
+            display: grid;
+            padding: 0 20px;
+        }
+
+        .card__name {
+            align-self: center;
+            justify-self: center;
+            margin-bottom: 2px;
+            color: white;
+            font-size: var(--fontLarge);
+            font-weight: var(--fontLight);
+            letter-spacing: 0.1rem;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+            background: -webkit-linear-gradient(white, #a1a1a1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-transition: all var(--speed) ease;
+            transition: all var(--speed) ease;
+        }
+
+        .card:hover .card__name {
+            background: -webkit-linear-gradient(white, #c1c1c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card__job {
+            align-self: center;
+            justify-self: center;
+            display: inline-block;
+            font-size: var(--fontSmall);
+            font-weight: var(--fontLight);
+            text-align: center;
+            letter-spacing: 0.35rem;
+            color: rgba(100, 130, 200, 0.45);
+            -webkit-transition: all var(--speed) ease;
+            transition: all var(--speed) ease;
+        }
+
+        .card:hover .card__job {
+            color: rgba(100, 130, 200, 1);
+        }
+
+        .card__bio {
+            position: relative;
+            -webkit-transform: translateY(30%);
+            transform: translateY(30%);
+            display: block;
+            margin: 22px 0 16px 0;
+            font-size: var(--fontMedium);
+            font-weight: var(--fontLight);
+            /*text-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.35);*/
+            color: rgba(255, 255, 255, 0.65);
+            opacity: 0;
+            -webkit-transition: all var(--speed) ease;
+            transition: all var(--speed) ease;
+        }
+
+        .card:hover .card__bio {
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .card__footer {
+            position: relative;
+            -webkit-transform: translateY(60%);
+            transform: translateY(60%);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-areas: "date category";
+            padding: 10px 20px;
+            opacity: 0;
+            -webkit-transition: all var(--speed) ease;
+            transition: all var(--speed) ease;
+        }
+
+        .card:hover .card__footer {
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .card__date {
+            grid-area: date;
+            display: inline-block;
+            align-self: left;
+            justify-self: left;
+            font-size: var(--fontSmall);
+            font-weight: var(--fontLight);
+            text-transform: uppercase;
+            text-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.45);
+            color: rgba(250, 250, 250, 0.4);
+        }
+
+        /* MODIFIERS */
+        .card[data-effect="blur"]:hover .card__image img {
+            -webkit-filter: blur(3px);
+            filter: blur(3px);
+        }
+
+        .card[data-effect="blur"] .card__image img {
+            animation-name: blur;
+        }
+
+        .card[data-effect="color"]:hover {
+            -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+            box-shadow: 0 40px 260px rgba(255, 0, 0, 0.1), 0 40px 130px rgba(250, 100, 100, 0.2), -80px -40px 230px rgba(0, 200, 250, 0.15), 80px 40px 230px rgba(120, 120, 255, 0.15);
+        }
+
+        .card[data-effect="color"] .card__image {
+            background: linear-gradient(to bottom, rgba(20, 20, 100, 1), rgba(255, 100, 100, 0.5))
+        }
+
+        .card[data-effect="color"]:hover .card__image img {
+            opacity: 0.8;
+        }
+
+        .card[data-effect="color"]:hover .card__profile img {
+            -webkit-filter: grayscale(50%) contrast(80%) brightness(1.6);
+            filter: grayscale(50%) contrast(80%) brightness(1.6);
+            mix-blend-mode: normal;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="index.html">
+                    <img src="images/logo osafa.png" class="img-fluid" alt="osafa">
+                    <span class="navbar-brand-text">
+                        OSAFA
+                        <small>Organisasi Santri Sekolah Impian</small>
+                    </span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="index.html">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="index.html">About</a>
+                        </li>
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="index.html" id="navbarLightDropdownMenuLink"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">Bidang</a>
+
+                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                <li><a class="dropdown-item" href="pembina.html">Pembina</a></li>
+                                <li><a class="dropdown-item" href="intiOsafa.html">Inti Osafa</a></li>
+                                <li><a class="dropdown-item" href="divisihumas.html">Divisi Humas</a></li>
+                                <li><a class="dropdown-item" href="divisicc.html">Divisi Content Creator</a></li>
+                                <li><a class="dropdown-item" href="divisirnd.html">Divisi R & D</a></li>
+
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="index.html">Events</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="index.html">Contact Us</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
+
+                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                <li><a class="dropdown-item" href="proker.html">Program Kerja</a></li>
+                                <li><a class="dropdown-item" href="dreamland.html">Event DreamLand</a></li>
+                                <li><a class="dropdown-item" href="tarhib.html">Tarhib Ramadhan</a></li>
+
+
+                                <li><a class="dropdown-item" href="event-detail.html">Event ArtQtion</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="pemilos.html">Pemilos</a>
+                        </li>
+                    </ul>
+
+
+                    <div class="d-none d-lg-block ms-lg-3">
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+
+            </div>
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#3D405B" fill-opacity="1"
+                    d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z">
+                </path>
+            </svg>
+        </div>
+
+
+        <section class="humas-section humas-50 d-flex justify-content-center align-items-center" id="section_1">
+
+            <div class="section-overlay"></div>
+
+            <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path fill="#3D405B" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#3D405B" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#3D405B" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#3D405B" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#3D405B" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#3D405B" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#3D405B" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z"
+                    stroke-width="0"></path>
+            </svg>
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-12">
+
+                        <h1 class="text-white mb-4 pb-2">Divisi Humas</h1>
+
+                        <a href="#section_2" class="btn custom-btn smoothscroll me-3">Learn more</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <svg viewBox="0 0 1962 178" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path fill="#ffffff" d="M 0 114 C 118.5 114 118.5 167 237 167 L 237 167 L 237 0 L 0 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#ffffff" d="M 236 167 C 373 167 373 128 510 128 L 510 128 L 510 0 L 236 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#ffffff" d="M 509 128 C 607 128 607 153 705 153 L 705 153 L 705 0 L 509 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#ffffff" d="M 704 153 C 812 153 812 113 920 113 L 920 113 L 920 0 L 704 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#ffffff" d="M 919 113 C 1048.5 113 1048.5 148 1178 148 L 1178 148 L 1178 0 L 919 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#ffffff" d="M 1177 148 C 1359.5 148 1359.5 129 1542 129 L 1542 129 L 1542 0 L 1177 0 Z"
+                    stroke-width="0"></path>
+                <path fill="#ffffff" d="M 1541 129 C 1751.5 129 1751.5 138 1962 138 L 1962 138 L 1962 0 L 1541 0 Z"
+                    stroke-width="0"></path>
+            </svg>
+        </section>
+
+
+        <section class="events-section events-detail-section section-padding" id="section_2">
+            <div class="container">
+                <div class="row">
+                    <div class=" row my-5">
+                        <div class="col-lg-12 col-12">
+                        </div>
+                    </div>
+                        
+                        
+                    <div class="card" data-effect="zoom">
+                        <button class="card__save  js-save" type="button">
+                            <i class="fa  fa-bookmark"></i>
+                        </button>
+                        <figure class="card__image">
+                            <img src="images/bg1.png" alt="Short description">
+                        </figure>
+                        <div class="card__header">
+                            <figure class="card__profile">
+                                <img src="images/alya.jpg" alt="Short description">
+                            </figure>
+                        </div>
+                        <div class="card__body">
+                            <h3 class="card__name">Alya Adibah</h3>
+                            <p class="card__job">Divisi Humas</p>
+                            <p class="card__bio">Tetap tersenyum di atas penderitaanmu bestie</p>
+                            <li class="social-icon-item">
+                                <a href="https://www.instagram.com/alyadibaa/" class="social-icon-link bi-instagram"></a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <!-- BEGIN: card -->
+                    <div class="card" data-effect="zoom">
+                        <button class="card__save  js-save" type="button">
+                            <i class="fa  fa-bookmark"></i>
+                        </button>
+                        <figure class="card__image">
+                            <img src="images/bg1.png" alt="Short description">
+                        </figure>
+                        <div class="card__header">
+                            <figure class="card__profile">
+                                <img src="images/jara.jpg" alt="Short description">
+                            </figure>
+                        </div>
+                        <div class="card__body">
+                            <h3 class="card__name">Baiq Zahra</h3>
+                            <p class="card__job">Divisi Humas</p>
+                            <p class="card__bio">Bekerjalah sampai digit rekening bank terlihat seperti nomor telepon.</p>
+                            <li class="social-icon-item">
+                                <a href="https://www.instagram.com/baiqzhr/" class="social-icon-link bi-instagram"></a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <!-- BEGIN: card -->
+                    <div class="card" data-effect="zoom">
+                        <button class="card__save  js-save" type="button">
+                            <i class="fa  fa-bookmark"></i>
+                        </button>
+                        <figure class="card__image">
+                            <img src="images/bg1.png" alt="Short description">
+                        </figure>
+                        <div class="card__header">
+                            <figure class="card__profile">
+                                <img src="images/zoya.jpg" alt="Short description">
+                            </figure>
+                        </div>
+                        <div class="card__body">
+                            <h3 class="card__name">Zoya Calvina </h3>
+                            <p class="card__job">Divisi Humas</p>
+                            <p class="card__bio">Mencintai orang yang salah membuat hidup menjadi lebih menantang</p>
+                            <li class="social-icon-item">
+                                <a href="https://www.instagram.com/zoyaclvn_/" class="social-icon-link bi-instagram"></a>
+                            </li>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6 col-12 me-auto mb-5 mb-lg-0">
+                    <a class="navbar-brand d-flex align-items-center" href="index.html">
+                        <img src="images/logo osafa.png" class="navbar-brand-image img-fluid" alt="">
+                        <span class="navbar-brand-text">
+                            OSAFA
+                            <small>Organisasi Santri Sekolah Impian</small>
+                        </span>
+                    </a>
+                </div>
+
+
+
+                <div class="col-lg-2 col-12 ms-auto">
+                    <ul class="social-icon mt-lg-5 mt-3 mb-4">
+                        <li class="social-icon-item">
+                            <a href="https://www.instagram.com/osafafq/" class="social-icon-link bi-instagram"></a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#3d405b" fill-opacity="1"
+                d="M0,224L34.3,192C68.6,160,137,96,206,90.7C274.3,85,343,139,411,144C480,149,549,107,617,122.7C685.7,139,754,213,823,240C891.4,267,960,245,1029,224C1097.1,203,1166,181,1234,160C1302.9,139,1371,117,1406,106.7L1440,96L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z">
+            </path>
+        </svg>
+    </footer>
+
+
+    <!-- JAVASCRIPT FILES -->
+
+    <script src="/osafa/osafa/js/jquery.min.js"></script>
+    <script src="/osafa/osafa/js/bootstrap.bundle.min.js"></script>
+    <script src="/osafa/osafa/js/jquery.sticky.js"></script>
+    <script src="/osafa/osafa/js/custom.js"></script>
+
+</body>
+
+</html>
